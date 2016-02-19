@@ -1,0 +1,232 @@
+<html>
+<head>
+	<style type="text/css" media="screen">
+
+		body{
+			background-color:#F46764;
+			font-family: "Helvetica", "Arial";
+			height:100%;
+			width:100%;
+		}
+		#userName{
+			font-size: 20px;
+			padding:10px;
+			color:white;
+		}
+		
+		#wrapper{
+			margin:20px 70px 10px 70px;
+			width:80%;
+			background:#262520;
+			border-radius:8px;
+			min-height:600px;
+			height:auto;
+			box-shadow:0px 0 10px #14110E;
+			margin-left:9%;
+			padding-left: 20px;
+		}
+		#title{
+			text-align: center;
+			color:white;
+			font-size: 50px;
+  text-shadow: 0 1px 0 #ccc,
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+
+		}
+		progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 250px;
+  height: 20px;
+}
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+
+#previewImage{
+	background-size: 100%;
+	width: 400px;
+	height:300px;
+	background-image:url('http://www.lardlad.com/assets/wallpaper/simpsons1920.jpg');
+	background-repeat: no-repeat;
+
+}
+a .playgame{
+	font-weight: bold;
+}
+.playgame{
+	background-color:#F7889B;
+	padding:5px;
+	border-radius:5px;
+	cursor: hand;
+}
+.playgame:hover{
+	color:black;
+}
+label{
+	color:white;
+}
+		
+		}
+	</style>
+	<title>SuperFighter</title>
+	<script src="jquery.min.js"></script>
+</head>
+<body onload="getName()">
+
+	<script type="text/javascript">
+	
+function getName(){
+	player = window.prompt("Please enter your name", "Player");
+	document.getElementById("userName").innerHTML = "Welcome " + player;
+	
+
+}
+
+function attack(){
+	document.getElementById("health").value-=10;
+}
+
+
+	</script>
+	<h1 id="title"> Super Fighter</h1>
+<div id="wrapper">
+	
+<p id="userName"></p>
+<center>
+
+<div id="gameStart" style="color:white">
+	<h2> Pick Your Team! </h2>
+<select id="start" onchange="changePic()">
+	<option value="1">Simpsons</option>
+	<option value="2">Family Guy</option>
+	<option value="3">South Park</option>
+</select>
+<script type="text/javascript">
+function changePic(){
+	if(document.getElementById('start').selectedIndex==0){
+		document.getElementById('previewImage').style.backgroundImage = "url('http://www.lardlad.com/assets/wallpaper/simpsons1920.jpg')"
+	}
+	if(document.getElementById('start').selectedIndex==1){
+		document.getElementById('previewImage').style.backgroundImage = "url('http://www.metro.us/wp-content/uploads/2013/11/family-guy.jpg')"
+	}
+	if(document.getElementById('start').selectedIndex==2){
+		document.getElementById('previewImage').style.backgroundImage = "url('http://www.watchcartoononline.com/thumbs/south-park-season-3-episode-9-jewbilee-3.jpg')"
+	}
+	
+}
+</script>
+<div id="previewImage">
+</div>
+<br>
+<a class="playgame">Play Game</a>
+</div>
+</center>
+<div id="game" style="display:none;">
+	<div id="userOptions" style="float:left">
+<label>Choose Character:</label><select id="characters"></select><br>
+<label>Choose Attack:</label><select id="attacks"></select><br>
+<button> Attack </button>
+</div>
+<div id="cpu" style="float:right;margin-left:20px;color:white;">
+	<h2> CPU</h2>
+</div>
+	</div>
+
+
+<script type="text/javascript">
+ $(".playgame").click(function(){
+ 	$('#gameStart').hide('slow');
+    //$('#gameStart').css("display","none");
+    $('#game').slideDown('fast');
+
+var team, team_id;
+ var charcters = new Array(4);
+
+
+ if(document.getElementById('start').selectedIndex==0){
+ 	team = "simpsons";
+ 	team_id = 1;
+ }
+ if(document.getElementById('start').selectedIndex==1){
+ 	team = "familyguy";
+ 	team_id = 2;
+ }
+ if(document.getElementById('start').selectedIndex==2){
+ 	team = "southpark";
+ 	team_id = 3;
+ }
+
+switch(team_id){
+	case 1:
+		charcters=["Homer", "Marge", "Bart", "Lisa"];
+		break;
+	case 2:
+		charcters=["Peter", "Lois", "Chris", "Meg"];
+		break;
+	case 3:
+		charcters=["Kyle", "Cartman", "Butters", "Stan"];
+		break;
+}
+
+
+for (var i=0;i<charcters.length;i++) {
+	var list = document.getElementById('characters');
+	var opts = document.createElement("option");
+	opts.text = charcters[i];
+	list.add(opts);
+}
+
+
+//Stats
+//Player Damage =	PlayerAttack + PlayerAbilityPower + random(-PlayerLevel,PlayerLevel) - EnemyDefence
+//Enemy Damage = EnemyCurrentLevel + EnemyPower + rand(-EnemyLevel,EnemyLevel) - PlayerDefence
+/* if (combatScreen.defend)
+                playerDefence = player.Abilities.Defense + 10;
+            else
+                playerDefence = player.Abilities.Defense;
+            */
+
+ //Damage = enemy.currentLvl + enemy.power + powerChance - playerDefence;
+ //if (chanceToHitZero > 90 || Damage < 0)
+
+
+
+var strength;
+var attack;
+var abilityPower;
+var health;
+var defence;
+
+
+
+
+  });
+
+ 
+
+
+
+</script>
+
+<progress id="health" value="100" max="100" style="display:none"></progress> 
+
+</div>
+<em>Afnan Yousuf 2014</em>
+</body>
+</html>
